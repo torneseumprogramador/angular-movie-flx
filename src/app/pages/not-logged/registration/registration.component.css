@@ -1,0 +1,27 @@
+#registration-page {
+    background-image: url('/images/background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.2;
+    background-attachment: fixed;
+}
+
+#registration-page-content {
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#registration-container {
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

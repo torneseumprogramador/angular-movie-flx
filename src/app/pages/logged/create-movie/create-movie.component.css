@@ -113,3 +113,9 @@ select.custom-input option {
 .new-here a:hover {
     text-decoration: underline !important;
 }
+
+@media screen and (max-width: 768px) {
+    .custom-button {
+        min-width: 200px;
+    }
+}

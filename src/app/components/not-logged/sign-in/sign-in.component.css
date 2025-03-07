@@ -70,3 +70,12 @@ h1 {
 .new-here a:hover {
     text-decoration: underline !important;
 }
+
+
+@media (max-width: 600px) {
+    .login-box {
+        width: 300px;
+        padding: 50px !important;
+        border-radius: 20px;
+    }
+}

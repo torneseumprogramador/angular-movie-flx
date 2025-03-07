@@ -1,1 +1,46 @@
-<p>header works!</p>
+<div id="header">
+    <div class="d-flex align-items-center gap-2">
+        <div class="logo">
+            <img src="/images/logo.png" alt="logo" />
+        </div>
+        
+        <nav class="main-nav" [class.active]="isMenuOpen">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Séries</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Filmes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Originais</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Novidades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="'/novo-filme'" routerLinkActive="active">Novo Filme</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+        <button class="menu-toggle" (click)="toggleMenu()">
+            <i class="bi bi-list">
+            </i>
+        </button>
+        
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" class="form-control" placeholder="Digite o nome do filme">
+        </div>
+        
+        <div class="profile">
+            <img src="/images/profile.png" alt="perfil" class="profile-img">
+        </div>
+    </div>
+</div>

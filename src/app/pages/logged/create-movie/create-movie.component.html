@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="logo text-center mb-4">
+        <img src="/images/logo.png" alt="logo" />
+    </div>
+
+    <div class="create-movie-container">
+        <h1 class="text-center mb-5">Cadastre seu filme aqui</h1>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <input type="text" 
+                    class="form-control custom-input" 
+                    placeholder="Nome do filme">
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <input type="text" 
+                    class="form-control custom-input" 
+                    placeholder="Descrição do filme">
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="input-group">
+                    <input type="text" 
+                        class="form-control custom-input" 
+                        placeholder="Data de lançamento">
+                    <span class="input-group-text custom-icon">
+                        <i class="bi bi-calendar text-danger"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="input-group">
+                    <input type="text" 
+                        class="form-control custom-input" 
+                        placeholder="Avaliação geral">
+                    <span class="input-group-text custom-icon">
+                        <i class="bi bi-star text-danger"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <select class="form-select custom-input">
+                    <option value="" disabled selected>Aonde está disponível?</option>
+                    <option value="netflix">Netflix</option>
+                    <option value="prime">Prime Video</option>
+                    <option value="disney">Disney+</option>
+                    <option value="hbo">HBO Max</option>
+                    <option value="globoplay">Globoplay</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <select class="form-select custom-input">
+                    <option value="" disabled selected>Qual categoria</option>
+                    <option value="acao">Ação</option>
+                    <option value="aventura">Aventura</option>
+                    <option value="comedia">Comédia</option>
+                    <option value="drama">Drama</option>
+                    <option value="terror">Terror</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn custom-button">
+                Cadastrar filme
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <a [routerLink]="'/'" class="nav-link text-white" routerLinkActive="active">Voltar</a>
+        </div>
+    </div>
+</div>

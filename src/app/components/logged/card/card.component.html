@@ -1,1 +1,31 @@
-<p>card works!</p>
+<div class="movie-card">
+    <div class="top-tag" *ngIf="isTop10">TOP 10</div>
+    
+    <div class="card-content">
+        <h2 class="movie-title">{{ title }}</h2>
+        
+        <p class="movie-description">
+            {{ description }}
+        </p>
+        
+        <div class="movie-info">
+            <div class="d-flex align-items-center gap-3">
+                <span class="duration">
+                    🕑 {{ duration }}
+                </span>
+                
+                <span class="age-rating">
+                    🔞 {{ ageRating }}
+                </span>
+            
+                <div class="rating" [ngClass]="getRatingClass()">
+                    🏆 {{ approvalRating }}% Aprovação
+                </div>
+            </div>
+            
+            <div class="provider mt-2">
+                <img [src]="providerLogo" alt="Provider Logo" class="provider-logo">
+            </div>
+        </div>
+    </div>
+</div>

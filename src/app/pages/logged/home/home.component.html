@@ -1,7 +1,22 @@
 <app-header />
-<div>
-    <app-card />
-    <app-card />
-    <app-card />
-    <app-card />
+<div class="container">
+    <a [routerLink]="'/novo-filme'" class="btn btn-danger">
+        Cadastrar filme
+    </a>
+    <hr>
+</div>
+<div class="container mb-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let movie of movies">
+            <app-card
+                [title]="movie.title"
+                [description]="movie.description"
+                [duration]="movie.duration"
+                [ageRating]="movie.ageRating"
+                [approvalRating]="movie.approvalRating"
+                [providerLogo]="movie.providerLogo"
+                [isTop10]="movie.isTop10"
+            ></app-card>
+        </div>
+    </div>
 </div>

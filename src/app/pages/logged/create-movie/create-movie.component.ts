@@ -23,21 +23,9 @@ export class CreateMovieComponent implements OnInit {
     services: []
   };
 
-  availableCategories: Category[] = [
-    { id: 1, name: 'Ação' },
-    { id: 2, name: 'Comédia' },
-    { id: 3, name: 'Drama' },
-    { id: 4, name: 'Ficção Científica' },
-    { id: 5, name: 'Terror' }
-  ];
-
-  availableServices: Service[] = [
-    { id: 1, name: 'Netflix' },
-    { id: 2, name: 'Prime Video' },
-    { id: 3, name: 'Disney+' },
-    { id: 4, name: 'HBO Max' },
-    { id: 5, name: 'Globoplay' }
-  ];
+  availableCategories: Category[] = [];
+  availableServices: Service[] = [];
+  isLoading: boolean = true;
 
   selectedCategoryId: number = 0;
   selectedServiceId: number = 0;
@@ -49,7 +37,38 @@ export class CreateMovieComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadCategories();
+    this.loadServices();
+  }
+
+  loadCategories() {
+    this.movieService.getAllCategories().subscribe({
+      next: (categories) => {
+        this.availableCategories = categories;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage = 'Erro ao carregar categorias. Por favor, tente novamente.';
+        this.isLoading = false;
+        console.error('Erro ao carregar categorias:', error);
+      }
+    });
+  }
+
+  loadServices() {
+    this.movieService.getAllStreamServices().subscribe({
+      next: (services) => {
+        this.availableServices = services;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage = 'Erro ao carregar serviços de streaming. Por favor, tente novamente.';
+        this.isLoading = false;
+        console.error('Erro ao carregar serviços:', error);
+      }
+    });
+  }
 
   onSubmit() {
     if (this.selectedCategoryId) {
@@ -69,7 +88,6 @@ export class CreateMovieComponent implements OnInit {
     this.movieService.createMovie(this.movie).subscribe({
       next: () => {
         this.successMessage = 'Filme cadastrado com sucesso!';
-        // Redirecionar para a lista de filmes após 2 segundos
         setTimeout(() => {
           this.router.navigate(['/']);
         }, 2000);

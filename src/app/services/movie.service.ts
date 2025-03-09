@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Movie } from '../interfaces/movie.interface';
+import { Movie, Category, Service } from '../interfaces/movie.interface';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -30,5 +30,13 @@ export class MovieService {
 
     deleteMovie(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/flix/movie/${id}`);
+    }
+
+    getAllCategories(): Observable<Category[]> {
+        return this.http.get<Category[]>(`${this.apiUrl}/flix/category`);
+    }
+
+    getAllStreamServices(): Observable<Service[]> {
+        return this.http.get<Service[]>(`${this.apiUrl}/flix/stream-service`);
     }
 } 

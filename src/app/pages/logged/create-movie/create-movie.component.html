@@ -6,72 +6,122 @@
     <div class="create-movie-container">
         <h1 class="text-center mb-5">Cadastre seu filme aqui</h1>
         
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <input type="text" 
-                    class="form-control custom-input" 
-                    placeholder="Nome do filme">
-            </div>
+        <div *ngIf="errorMessage" class="alert alert-danger">
+            {{errorMessage}}
+        </div>
 
-            <div class="col-md-6 mb-4">
-                <input type="text" 
-                    class="form-control custom-input" 
-                    placeholder="Descrição do filme">
-            </div>
+        <div *ngIf="successMessage" class="alert alert-success">
+            {{successMessage}}
+        </div>
 
-            <div class="col-md-6 mb-4">
-                <div class="input-group">
+        <form (ngSubmit)="onSubmit()" #movieForm="ngForm">
+            <div class="row">
+                <div class="col-md-6 mb-4">
                     <input type="text" 
                         class="form-control custom-input" 
-                        placeholder="Data de lançamento">
-                    <span class="input-group-text custom-icon">
-                        <i class="bi bi-calendar text-danger"></i>
-                    </span>
+                        placeholder="Nome do filme"
+                        id="title"
+                        name="title"
+                        [(ngModel)]="movie.title"
+                        required
+                        #title="ngModel">
+                    <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                        O título é obrigatório
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <input type="text" 
+                        class="form-control custom-input" 
+                        placeholder="Descrição do filme"
+                        id="description"
+                        name="description"
+                        [(ngModel)]="movie.description"
+                        required
+                        #description="ngModel">
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+                        A descrição é obrigatória
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="input-group">
+                        <input type="text" 
+                            class="form-control custom-input" 
+                            placeholder="Data de lançamento"
+                            id="releaseDate"
+                            name="releaseDate"
+                            [(ngModel)]="movie.releaseDate"
+                            required
+                            placeholder="dd/mm/yyyy"
+                            #releaseDate="ngModel">
+                        <span class="input-group-text custom-icon">
+                            <i class="bi bi-calendar text-danger"></i>
+                        </span>
+                    </div>
+                    <div *ngIf="releaseDate.invalid && (releaseDate.dirty || releaseDate.touched)" class="text-danger w100">
+                        A data de lançamento é obrigatória
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="input-group">
+                        <input type="number" 
+                            class="form-control custom-input" 
+                            placeholder="Avaliação geral"
+                            id="rating"
+                            name="rating"
+                            [(ngModel)]="movie.rating"
+                            required
+                            min="0"
+                            max="10"
+                            step="0.1"
+                            #rating="ngModel">
+                        <span class="input-group-text custom-icon">
+                            <i class="bi bi-star text-danger"></i>
+                        </span>
+                    </div>
+                    <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="text-danger w100">
+                        A nota deve estar entre 0 e 10
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <select class="form-select custom-input"
+                            id="category"
+                            name="category"
+                            [(ngModel)]="selectedCategoryId"
+                            required>
+                        <option [ngValue]="0" disabled selected>Qual categoria</option>
+                        <option *ngFor="let category of availableCategories" [value]="category.id">
+                            {{category.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <select class="form-select custom-input"
+                            id="service"
+                            name="service"
+                            [(ngModel)]="selectedServiceId"
+                            required>
+                        <option [ngValue]="0" disabled selected>Aonde está disponível?</option>
+                        <option *ngFor="let service of availableServices" [value]="service.id">
+                            {{service.name}}
+                        </option>
+                    </select>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-4">
-                <div class="input-group">
-                    <input type="text" 
-                        class="form-control custom-input" 
-                        placeholder="Avaliação geral">
-                    <span class="input-group-text custom-icon">
-                        <i class="bi bi-star text-danger"></i>
-                    </span>
-                </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn custom-button" [disabled]="movieForm.invalid">
+                    Cadastrar filme
+                </button>
             </div>
-
-            <div class="col-md-6 mb-4">
-                <select class="form-select custom-input">
-                    <option value="" disabled selected>Aonde está disponível?</option>
-                    <option value="netflix">Netflix</option>
-                    <option value="prime">Prime Video</option>
-                    <option value="disney">Disney+</option>
-                    <option value="hbo">HBO Max</option>
-                    <option value="globoplay">Globoplay</option>
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <select class="form-select custom-input">
-                    <option value="" disabled selected>Qual categoria</option>
-                    <option value="acao">Ação</option>
-                    <option value="aventura">Aventura</option>
-                    <option value="comedia">Comédia</option>
-                    <option value="drama">Drama</option>
-                    <option value="terror">Terror</option>
-                </select>
-            </div>
-        </div>
+        </form>
 
         <div class="text-center mt-4">
-            <button type="submit" class="btn custom-button">
-                Cadastrar filme
-            </button>
-        </div>
-
-        <div class="text-center mt-4">
-            <a [routerLink]="'/'" class="nav-link text-white" routerLinkActive="active">Voltar</a>
+            <a routerLink="/" class="nav-link text-white">Voltar</a>
         </div>
     </div>
 </div>

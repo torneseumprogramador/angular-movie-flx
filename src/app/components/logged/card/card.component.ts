@@ -16,6 +16,7 @@ export class CardComponent {
   @Input() approvalRating: number = 0;
   @Input() providerLogo: string = '';
   @Input() isTop10: boolean = false;
+  @Input() releaseDate: string = '';
 
   getRatingClass(): string {
     return this.approvalRating >= 50 ? 'rating-good' : 'rating-bad';

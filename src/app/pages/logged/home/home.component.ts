@@ -3,7 +3,9 @@ import { HeaderComponent } from '../../../components/logged/header/header.compon
 import { CardComponent } from '../../../components/logged/card/card.component';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Movie } from '../../../interfaces/movie';
+import { MovieService } from '../../../services/movie.service';
+import { Movie } from '../../../interfaces/movie.interface';
+import { Service } from '../../../interfaces/movie.interface';
 
 @Component({
   selector: 'app-home',
@@ -12,76 +14,62 @@ import { Movie } from '../../../interfaces/movie';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  movies: Movie[] = [
-    {
-      id: 1,
-      title: "O Poderoso Chefão",
-      description: "Don Corleone, chefe da máfia, precisa passar o legado para seu filho Michael, que reluta em assumir os negócios da família.",
-      duration: "1:30h",
-      ageRating: "Somente +18",
-      approvalRating: 87,
-      providerLogo: "/images/patners/apple.png",
-      isTop10: true
-    },
-    {
-      id: 2,
-      title: "Matrix",
-      description: "Um programador descobre que a realidade como conhecemos é uma simulação criada por máquinas e se une a um grupo de rebeldes para libertar a humanidade.",
-      duration: "2:16h",
-      ageRating: "+16",
-      approvalRating: 92,
-      providerLogo: "/images/patners/netflix.png",
-      isTop10: true
-    },
-    {
-      id: 3,
-      title: "Inception",
-      description: "Um ladrão especializado em roubar informações através dos sonhos recebe uma missão impossível: plantar uma ideia na mente de alguém.",
-      duration: "2:28h",
-      ageRating: "+14",
-      approvalRating: 89,
-      providerLogo: "/images/patners/claro.png",
-      isTop10: false
-    },
-    {
-      id: 4,
-      title: "O Senhor dos Anéis",
-      description: "Um hobbit recebe a missão de destruir um anel mágico que pode salvar ou destruir a Terra-média.",
-      duration: "2:58h",
-      ageRating: "+12",
-      approvalRating: 95,
-      providerLogo: "/images/patners/netflix.png",
-      isTop10: true
-    },
-    {
-      id: 5,
-      title: "Pulp Fiction",
-      description: "Várias histórias se entrelaçam em Los Angeles, envolvendo assassinos, boxeadores, gângsteres e criminosos.",
-      duration: "2:34h",
-      ageRating: "+18",
-      approvalRating: 91,
-      providerLogo: "/images/patners/apple.png",
-      isTop10: true
-    },
-    {
-      id: 6,
-      title: "O Silêncio dos Inocentes",
-      description: "Uma agente do FBI busca a ajuda de um canibal preso para capturar um serial killer.",
-      duration: "1:58h",
-      ageRating: "+18",
-      approvalRating: 88,
-      providerLogo: "/images/patners/claro.png",
-      isTop10: false
-    },
-    {
-      id: 7,
-      title: "O Poderoso Chefão",
-      description: "Don Corleone, chefe da máfia, precisa passar o legado para seu filho Michael, que reluta em assumir os negócios da família.",
-      duration: "1:30h",
-      ageRating: "+18",
-      approvalRating: 88,
-      providerLogo: "/images/patners/netflix.png",
-      isTop10: false
+  constructor(private movieService: MovieService) {}
+
+  movies: Movie[] = [];
+  loading: boolean = true;
+  error: string = '';
+  
+  ngOnInit() {
+    this.loadMovies();
+  }
+
+  loadMovies() {
+    this.loading = true;
+    this.error = '';
+
+    this.movieService.getAllMovies().subscribe({
+      next: (movies) => {
+        this.movies = movies;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Erro ao carregar os filmes. Por favor, tente novamente mais tarde.';
+        this.loading = false;
+        console.error('Erro ao carregar filmes:', error);
+      }
+    });
+  }
+
+  // TODO: Teria que vir do modelo e pedir para o backend
+  providerLogo(services: Service[]): string {
+    if (services.length > 0) {
+      return `/images/patners/${services[0].name}.png`;
     }
-  ];
+    return '/images/patners/netflix.png';
+  }
+
+  // TODO: Teria que vir do modelo e pedir para o backend
+  getApprovalRating(rating: number): number {
+    return Math.round(rating * 10);
+  }
+
+  // TODO: Teria que vir do modelo e pedir para o backend
+  duration(): string {
+    const hours = Math.floor(Math.random() * 3) + 1;
+    const minutes = Math.floor(Math.random() * 60);
+    return `${hours}h ${minutes}m`;
+  }
+
+  // TODO: Teria que vir do modelo e pedir para o backend
+  ageRating(): string {
+    const ratings = ['+10', '+12', '+14', '+16', '+18'];
+    return ratings[Math.floor(Math.random() * ratings.length)];
+  }
+
+  // TODO: Teria que vir do modelo e pedir para o backend
+  isTop10(): boolean {
+    return Math.random() < 0.5;
+  }
 }
+

@@ -5,17 +5,30 @@
     </a>
     <hr>
 </div>
-<div class="container mb-5">
+
+<div *ngIf="loading" class="text-center text-white">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="mt-2">Carregando filmes...</p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    {{error}}
+</div>
+
+<div *ngIf="!loading && !error" class="container mb-5">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col" *ngFor="let movie of movies">
             <app-card
                 [title]="movie.title"
                 [description]="movie.description"
-                [duration]="movie.duration"
-                [ageRating]="movie.ageRating"
-                [approvalRating]="movie.approvalRating"
-                [providerLogo]="movie.providerLogo"
-                [isTop10]="movie.isTop10"
+                [duration]="duration()"
+                [releaseDate]="movie.releaseDate"
+                [ageRating]="ageRating()"
+                [isTop10]="isTop10()"
+                [approvalRating]="getApprovalRating(movie.rating)"
+                [providerLogo]="providerLogo(movie.services)"
             ></app-card>
         </div>
     </div>

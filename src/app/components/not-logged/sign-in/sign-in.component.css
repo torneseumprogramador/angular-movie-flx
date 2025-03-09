@@ -71,6 +71,11 @@ h1 {
     text-decoration: underline !important;
 }
 
+.error-message {
+    color: #e50914;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
 
 @media (max-width: 600px) {
     .login-box {

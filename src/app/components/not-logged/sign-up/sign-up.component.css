@@ -50,6 +50,22 @@ h1 {
     background-color: #c11119;
 }
 
+.error-message {
+    color: #e50914;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.success-message {
+    color: #2ecc71;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    padding: 8px;
+    background-color: rgba(46, 204, 113, 0.1);
+    border-radius: 4px;
+    text-align: center;
+}
+
 .forgot-password {
     font-size: 0.9rem;
     color: #b3b3b3;

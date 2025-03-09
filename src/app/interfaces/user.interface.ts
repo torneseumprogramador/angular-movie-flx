@@ -3,11 +3,10 @@ export interface User {
     password: string;
 }
 
+export interface UserRegister extends User {
+    name: string;
+}
+
 export interface UserResponse {
     token: string;
-    user: {
-        id: number;
-        email: string;
-        name: string;
-    }
 } 

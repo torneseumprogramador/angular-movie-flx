@@ -3,31 +3,72 @@
         <div class="registration-box p-4">
             <h1 class="mb-4">Cadastre-se</h1>
             
-            <form>
+            <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
                 <div class="mb-3">
                     <input type="text" 
-                            class="form-control custom-input" 
-                            placeholder="Seu nome completo">
+                           class="form-control custom-input" 
+                           placeholder="Nome completo"
+                           id="name" 
+                           name="name"
+                           [(ngModel)]="user.name"
+                           required
+                           minlength="3"
+                           #name="ngModel">
+
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+                        <div *ngIf="name.errors?.['required']">Nome é obrigatório.</div>
+                        <div *ngIf="name.errors?.['minlength']">Nome deve ter no mínimo 3 caracteres.</div>
+                    </div>
                 </div>
 
                 <div class="mb-3">
-                    <input type="text" 
-                            class="form-control custom-input" 
-                            placeholder="Seu melhor e-mail">
+                    <input type="email" 
+                           class="form-control custom-input" 
+                           placeholder="E-mail"
+                           id="email" 
+                           name="email"
+                           [(ngModel)]="user.email"
+                           required
+                           email
+                           #email="ngModel">
+
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+                        <div *ngIf="email.errors?.['required']">Email é obrigatório.</div>
+                        <div *ngIf="email.errors?.['email']">Email inválido.</div>
+                    </div>
                 </div>
                 
                 <div class="mb-3">
                     <input type="password" 
-                            class="form-control custom-input" 
-                            placeholder="Sua senha">
+                           class="form-control custom-input" 
+                           placeholder="Senha"
+                           id="password" 
+                           name="password"
+                           [(ngModel)]="user.password"
+                           required
+                           minlength="6"
+                           #password="ngModel">
+
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+                        <div *ngIf="password.errors?.['required']">Senha é obrigatória.</div>
+                        <div *ngIf="password.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres.</div>
+                    </div>
+                </div>
+
+                <div *ngIf="errorMessage" class="error-message mb-3">
+                    {{errorMessage}}
+                </div>
+
+                <div *ngIf="sucessMessage" class="success-message mb-3">
+                    {{sucessMessage}}
                 </div>
                 
-                <button type="submit" class="btn btn-danger w-100 custom-button mb-3">
-                    Entrar na conta
+                <button type="submit" [disabled]="registerForm.invalid" class="btn btn-danger w-100 custom-button mb-3">
+                    Criar conta
                 </button>
                 
                 <div class="text-center new-here">
-                    <span class="text-white">Já tem sua conta?</span>
+                    <span class="text-white">Já tem uma conta?</span>
                     <a [routerLink]="'/login'" class="text-danger text-decoration-none ms-2">
                         Faça login
                     </a>

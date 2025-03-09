@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User, UserResponse } from '../interfaces/user.interface';
+import { User, UserResponse, UserRegister } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class AuthService {
 
     login(user: User): Observable<UserResponse> {
         return this.http.post<UserResponse>(`${this.apiUrl}/auth/login`, user);
+    }
+
+    register(user: UserRegister): Observable<UserResponse> {
+        return this.http.post<UserResponse>(`${this.apiUrl}/auth/register`, user);
     }
 
     validateToken(): Observable<boolean> {
